@@ -2,14 +2,14 @@ import { AppError } from "../../../../shared/errors/AppError";
 import { InMemoryUsersRepository } from "../../repositories/in-memory/InMemoryUsersRepository";
 import { CreateUserUseCase } from "./CreateUserUseCase";
 
-let createCategoryUseCase: CreateUserUseCase;
+let createUserUseCase: CreateUserUseCase;
 let usersRepositoryInMemory: InMemoryUsersRepository;
 
 describe("Rotas do usuário: ", () => {
 
   beforeAll(() => {
     usersRepositoryInMemory = new InMemoryUsersRepository();
-    createCategoryUseCase = new CreateUserUseCase(usersRepositoryInMemory);
+    createUserUseCase = new CreateUserUseCase(usersRepositoryInMemory);
   })
 
   it("Deve ser possível criar um usuário:", async () => {
@@ -19,8 +19,8 @@ describe("Rotas do usuário: ", () => {
       password: "123",
     }
 
-    const response = await createCategoryUseCase.execute(mockUser);
-    expect(response).toHaveProperty("email");
+    const user = await createUserUseCase.execute(mockUser);
+    expect(user).toHaveProperty("email");
   });
 
   it("Não deve ser possível criar um usuário duplicado:", async () => {
@@ -30,6 +30,6 @@ describe("Rotas do usuário: ", () => {
       password: "123",
     }
 
-    await expect(createCategoryUseCase.execute(mockUser)).rejects.toBeInstanceOf(AppError);
+    await expect(createUserUseCase.execute(mockUser)).rejects.toBeInstanceOf(AppError);
   });
 });
