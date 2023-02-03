@@ -32,9 +32,9 @@ describe("Rota de deposit", () => {
 
     const user = await usersRepositoryInMemory.findByEmail("emailTeste");
 
-    const teste = {user_id: user?.id, type: "Deposit", amount: 100, description: "descrição"};
+    const statement = await createStatementUseCase.execute({user_id: user?.id, type: "Deposit", amount: 100, description: "descrição"} as any);
 
-    await createStatementUseCase.execute(teste as any);
+    expect(statement).toHaveProperty("amount");
   });
 
   it("Não deve ser possível fazer um saque sem user_id válido: ", async () => {
