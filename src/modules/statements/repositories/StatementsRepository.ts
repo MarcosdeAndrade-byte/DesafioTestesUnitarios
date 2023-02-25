@@ -15,18 +15,21 @@ export class StatementsRepository implements IStatementsRepository {
 
   async create({
     user_id,
+    sender_id,
     amount,
     description,
     type
   }: ICreateStatementDTO): Promise<Statement> {
+    console.log(user_id, sender_id, amount, description, type);
     const statement = this.repository.create({
       user_id,
+      sender_id,
       amount,
       description,
       type
     });
-
-    return this.repository.save(statement);
+    console.log(user_id, sender_id, amount, description, type);
+    return await this.repository.save(statement);
   }
 
   async findStatementOperation({ statement_id, user_id }: IGetStatementOperationDTO): Promise<Statement | undefined> {

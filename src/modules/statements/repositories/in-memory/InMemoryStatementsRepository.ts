@@ -31,6 +31,7 @@ export class InMemoryStatementsRepository implements IStatementsRepository {
   {
     const statement = this.statements.filter(operation => operation.user_id === user_id);
 
+    // Vamos passar por todas as operações feitas, o que for deposito será acumulado o que for saque ou transferência será retirado do montante
     const balance = statement.reduce((acc, operation) => {
       if (operation.type === 'deposit') {
         return acc + operation.amount;

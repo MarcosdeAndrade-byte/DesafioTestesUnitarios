@@ -33,6 +33,10 @@ export class GetStatementOperationUseCase {
         throw new GetStatementOperationError.StatementNotFound();
       }
 
+      if(statementOperation.type != 'transfer') {
+        delete statementOperation.sender_id;
+      }
+
       return statementOperation;
   }
 }
